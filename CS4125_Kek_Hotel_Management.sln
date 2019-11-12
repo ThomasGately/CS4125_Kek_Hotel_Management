@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS4125_Kek_Hotel_Management", "CS4125_Kek_Hotel_Management\CS4125_Kek_Hotel_Management.csproj", "{F9C3FB12-3F03-4F8A-84BD-9F726F320650}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9C3FB12-3F03-4F8A-84BD-9F726F320650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9C3FB12-3F03-4F8A-84BD-9F726F320650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9C3FB12-3F03-4F8A-84BD-9F726F320650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9C3FB12-3F03-4F8A-84BD-9F726F320650}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A35E129C-9D91-4F9F-8A05-0A778EF3EA20}
+	EndGlobalSection
+EndGlobal
