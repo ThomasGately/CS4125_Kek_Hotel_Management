@@ -131,7 +131,7 @@ $.extend($.fn, {
 		/// <summary>
 		/// Remove the specified attributes from the first matched element and return them.
 		/// </summary>
-		/// <param name="attributes" type="String">
+		/// <param name="attributes" type="string">
 		/// A space-seperated list of attribute names to remove.
 		/// </param>
 
@@ -148,7 +148,7 @@ $.extend($.fn, {
 		/// <summary>
 		/// Return the validations rules for the first selected element.
 		/// </summary>
-		/// <param name="command" type="String">
+		/// <param name="command" type="string">
 		/// Can be either "add" or "remove".
 		/// </param>
 		/// <param name="argument" type="">
@@ -225,13 +225,13 @@ $.validator.format = function(source, params) {
 	/// One or more arguments can be passed, in addition to the string template itself, to insert
 	/// into the string.
 	/// </summary>
-	/// <param name="source" type="String">
+	/// <param name="source" type="string">
 	/// The string to format.
 	/// </param>
-	/// <param name="params" type="String">
-	/// The first argument to insert, or an array of Strings to insert
+	/// <param name="params" type="string">
+	/// The first argument to insert, or an array of strings to insert
 	/// </param>
-	/// <returns type="String" />
+	/// <returns type="string" />
 
 	if ( arguments.length == 1 ) 
 		return function() {
@@ -636,7 +636,7 @@ $.extend($.validator, {
 		// return the custom message for the given element name and validation method
 		customMessage: function( name, method ) {
 			var m = this.settings.messages[name];
-			return m && (m.constructor == String
+			return m && (m.constructor == string
 				? m
 				: m[method]);
 		},
@@ -857,14 +857,14 @@ $.extend($.validator, {
 		/// Add a compound class method - useful to refactor common combinations of rules into a single
 		/// class.
 		/// </summary>
-		/// <param name="name" type="String">
+		/// <param name="name" type="string">
 		/// The name of the class rule to add
 		/// </param>
 		/// <param name="rules" type="Options">
 		/// The compound rules
 		/// </param>
 
-		className.constructor == String ?
+		className.constructor == string ?
 			this.classRuleSettings[className] = rules :
 			$.extend(this.classRuleSettings, className);
 	},
@@ -1000,14 +1000,14 @@ $.extend($.validator, {
 		/// Add a custom validation method. It must consist of a name (must be a legal javascript 
 		/// identifier), a javascript based function and a default string message.
 		/// </summary>
-		/// <param name="name" type="String">
+		/// <param name="name" type="string">
 		/// The name of the method, used to identify and referencing it, must be a valid javascript
 		/// identifier
 		/// </param>
 		/// <param name="method" type="Function">
 		/// The actual method implementation, returning true if an element is valid
 		/// </param>
-		/// <param name="message" type="String" optional="true">
+		/// <param name="message" type="string" optional="true">
 		/// (Optional) The default message to display for this method. Can be a function created by 
 		/// jQuery.validator.format(value). When undefined, an already existing message is used 
 		/// (handy for localization), otherwise the field-specific messages have to be defined.
@@ -1245,7 +1245,7 @@ $.format = $.validator.format;
 // provides cross-browser focusin and focusout events
 // IE has native support, in other browsers, use event caputuring (neither bubbles)
 
-// provides delegate(type: String, delegate: Selector, handler: Callback) plugin for easier event delegation
+// provides delegate(type: string, delegate: Selector, handler: Callback) plugin for easier event delegation
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target 
 ;(function($) {
 	// only implement if not provided by jQuery core (since 1.4)
