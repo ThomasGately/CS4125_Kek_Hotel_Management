@@ -12,22 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Booking.BookingId)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Occupied)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Room_type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookingId)
         </th>
         <th></th>
     </tr>
@@ -35,22 +26,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Booking.BookingId)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Occupied)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Room_type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookingId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RoomId }) |

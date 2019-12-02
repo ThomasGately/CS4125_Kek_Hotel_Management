@@ -61,13 +61,13 @@ var indexOf = arr.indexOf;
 
 var class2type = {};
 
-var tostring = class2type.tostring;
+var toString = class2type.toString;
 
 var hasOwn = class2type.hasOwnProperty;
 
-var fnTostring = hasOwn.tostring;
+var fnToString = hasOwn.toString;
 
-var ObjectFunctionstring = fnTostring.call( Object );
+var ObjectFunctionString = fnToString.call( Object );
 
 var support = {};
 
@@ -119,7 +119,7 @@ function toType( obj ) {
 
 	// Support: Android <=2.3 only (functionish RegExp)
 	return typeof obj === "object" || typeof obj === "function" ?
-		class2type[ tostring.call( obj ) ] || "object" :
+		class2type[ toString.call( obj ) ] || "object" :
 		typeof obj;
 }
 /* global Symbol */
@@ -311,8 +311,8 @@ jQuery.extend( {
 		var proto, Ctor;
 
 		// Detect obvious negatives
-		// Use tostring instead of jQuery.type to catch host objects
-		if ( !obj || tostring.call( obj ) !== "[object Object]" ) {
+		// Use toString instead of jQuery.type to catch host objects
+		if ( !obj || toString.call( obj ) !== "[object Object]" ) {
 			return false;
 		}
 
@@ -325,7 +325,7 @@ jQuery.extend( {
 
 		// Objects with prototype are plain iff they were constructed by a global Object function
 		Ctor = hasOwn.call( proto, "constructor" ) && proto.constructor;
-		return typeof Ctor === "function" && fnTostring.call( Ctor ) === ObjectFunctionstring;
+		return typeof Ctor === "function" && fnToString.call( Ctor ) === ObjectFunctionString;
 	},
 
 	isEmptyObject: function( obj ) {
@@ -475,7 +475,7 @@ if ( typeof Symbol === "function" ) {
 }
 
 // Populate the class2type map
-jQuery.each( "Boolean Number string Function Array Date RegExp Object Error Symbol".split( " " ),
+jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
 function( i, name ) {
 	class2type[ "[object " + name + "]" ] = name.toLowerCase();
 } );
@@ -644,9 +644,9 @@ var i,
 			escaped :
 			high < 0 ?
 				// BMP codepoint
-				string.fromCharCode( high + 0x10000 ) :
+				String.fromCharCode( high + 0x10000 ) :
 				// Supplemental Plane codepoint (surrogate pair)
-				string.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
+				String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
 	},
 
 	// CSS string/identifier serialization
@@ -661,7 +661,7 @@ var i,
 			}
 
 			// Control characters and (dependent upon position) numbers get escaped as code points
-			return ch.slice( 0, -1 ) + "\\" + ch.charCodeAt( ch.length - 1 ).tostring( 16 ) + " ";
+			return ch.slice( 0, -1 ) + "\\" + ch.charCodeAt( ch.length - 1 ).toString( 16 ) + " ";
 		}
 
 		// Other potentially-special ASCII characters get backslash-escaped
@@ -897,7 +897,7 @@ function assert( fn ) {
 
 /**
  * Adds the same handler for all of the specified attrs
- * @param {string} attrs Pipe-separated list of attributes
+ * @param {String} attrs Pipe-separated list of attributes
  * @param {Function} handler The method that will be applied
  */
 function addHandle( attrs, handler ) {
@@ -939,7 +939,7 @@ function siblingCheck( a, b ) {
 
 /**
  * Returns a function to use in pseudos for input types
- * @param {string} type
+ * @param {String} type
  */
 function createInputPseudo( type ) {
 	return function( elem ) {
@@ -950,7 +950,7 @@ function createInputPseudo( type ) {
 
 /**
  * Returns a function to use in pseudos for buttons
- * @param {string} type
+ * @param {String} type
  */
 function createButtonPseudo( type ) {
 	return function( elem ) {
@@ -2608,7 +2608,7 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 /**
  * A low-level selection function that works with Sizzle's compiled
  *  selector functions
- * @param {string|Function} selector A selector or a pre-compiled
+ * @param {String|Function} selector A selector or a pre-compiled
  *  selector function built with Sizzle.compile
  * @param {Element} context
  * @param {Array} [results]
@@ -3191,7 +3191,7 @@ var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
 
 
 
-// Convert string-formatted options into Object-formatted ones
+// Convert String-formatted options into Object-formatted ones
 function createOptions( options ) {
 	var object = {};
 	jQuery.each( options.match( rnothtmlwhite ) || [], function( _, flag ) {
@@ -3224,7 +3224,7 @@ function createOptions( options ) {
  */
 jQuery.Callbacks = function( options ) {
 
-	// Convert options from string-formatted to Object-formatted if needed
+	// Convert options from String-formatted to Object-formatted if needed
 	// (we check in cache first)
 	options = typeof options === "string" ?
 		createOptions( options ) :
@@ -3691,7 +3691,7 @@ jQuery.extend( {
 		// Add list-specific methods
 		jQuery.each( tuples, function( i, tuple ) {
 			var list = tuple[ 2 ],
-				statestring = tuple[ 5 ];
+				stateString = tuple[ 5 ];
 
 			// promise.progress = list.add
 			// promise.done = list.add
@@ -3699,13 +3699,13 @@ jQuery.extend( {
 			promise[ tuple[ 1 ] ] = list.add;
 
 			// Handle state
-			if ( statestring ) {
+			if ( stateString ) {
 				list.add(
 					function() {
 
 						// state = "resolved" (i.e., fulfilled)
 						// state = "rejected"
-						state = statestring;
+						state = stateString;
 					},
 
 					// rejected_callbacks.disable

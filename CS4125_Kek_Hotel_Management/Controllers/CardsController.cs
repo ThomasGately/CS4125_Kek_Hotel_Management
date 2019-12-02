@@ -6,20 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CS4125_Kek_Hotel_Management.DAL;
 using CS4125_Kek_Hotel_Management.Models;
 
 namespace CS4125_Kek_Hotel_Management.Controllers
 {
     public class CardsController : Controller
     {
-        private HotelContext db = new HotelContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Cards
         public ActionResult Index()
         {
-            var cards = db.Cards.Include(c => c.CardsCustomer);
-            return View(cards.ToList());
+            return View(db.Cards.ToList());
         }
 
         // GET: Cards/Details/5
@@ -40,7 +38,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // GET: Cards/Create
         public ActionResult Create()
         {
-            ViewBag.CardsCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName");
             return View();
         }
 
@@ -49,7 +46,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CardId,BillingAddress,CardHolderName,ExpiryDate,CardsCustomerId")] Card card)
+        public ActionResult Create([Bind(Include = "CardId,BillingAddress,CardHolderName,ExpiryDate")] Card card)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +55,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CardsCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName", card.CardsCustomerId);
             return View(card);
         }
 
@@ -74,7 +70,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CardsCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName", card.CardsCustomerId);
             return View(card);
         }
 
@@ -83,7 +78,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CardId,BillingAddress,CardHolderName,ExpiryDate,CardsCustomerId")] Card card)
+        public ActionResult Edit([Bind(Include = "CardId,BillingAddress,CardHolderName,ExpiryDate")] Card card)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +86,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CardsCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName", card.CardsCustomerId);
             return View(card);
         }
 

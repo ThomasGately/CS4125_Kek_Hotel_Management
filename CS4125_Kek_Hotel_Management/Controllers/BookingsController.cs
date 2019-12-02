@@ -2,24 +2,178 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CS4125_Kek_Hotel_Management.DAL;
 using CS4125_Kek_Hotel_Management.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CS4125_Kek_Hotel_Management.Controllers
 {
     public class BookingsController : Controller
     {
-        private HotelContext db = new HotelContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public BookingsController()
+        {
+        }
+
+        public BookingsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Bookings
         public ActionResult Index()
         {
-            var bookings = db.Bookings.Include(b => b.BookedCustomer).Include(b => b.BookedRoom);
-            return View(bookings.ToList());
+            var booking = db.Bookings.Include(b => b.Room);
+            return View(booking.ToList());
+        }
+
+        public ActionResult BookingRoomDateView()
+        {
+            ViewBag.BookingId = new SelectList(db.Rooms, "RoomId", "Description");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BookingRoomDateView(BookingRoomDateViewModles model)
+        {
+            Debug.WriteLine("kek");
+            Debug.WriteLine("");
+
+            if (ModelState.IsValid)
+            {
+                DbSet<Room> Rooms = db.Rooms;
+                DbSet<Booking> bookings = db.Bookings;
+                DbSet<UserInfo> UserInfos = db.UesrInfos;
+
+                var userid = User.Identity.GetUserId();
+
+                var query1 =
+                    (from Room in Rooms
+                     join Booking in bookings
+                     on Room.RoomId
+                     equals Booking.Room.RoomId into RoomGroup
+                     //where Booking.ArrivalDate > model.DateDeparture ||
+                     //Booking.DepartureDate < model.DateArrival
+                     select new
+                     {
+                         Room.RoomId,
+                         Room.Price,
+                         FoundRoom = Room
+                    }).FirstOrDefault();
+
+                var query2 =
+                    (from UserInfo in UserInfos
+                     where UserInfo.ApplicationUser_Id.Id == userid
+                     select new
+                     {
+                         FounUser = UserInfo
+                     }).FirstOrDefault();
+
+                Debug.WriteLine(query2);
+
+
+                if (query1 != null && query2 != null)
+                {
+
+                    Debug.WriteLine(User.Identity.GetUserId());
+                    Debug.WriteLine("jjjjjjjjjj");
+                    Booking NewBooking = new Booking{
+                        Price = query1.Price,
+                        Payed = false,
+                        ArrivalDate = model.DateArrival,
+                        DepartureDate = model.DateArrival.AddDays(model.NoOfDaysStayed),
+                        AadOns = "",
+                        Room = query1.FoundRoom,
+                        UserInfo = query2.FounUser
+                    };
+                    db.Bookings.Add(NewBooking);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Debug.WriteLine("jjjj");
+                    Debug.WriteLine("");
+                }
+                /*
+                foreach (var group in query)
+                {
+                    Debug.WriteLine("RoomId: {0}", group.RoomId);
+                    Debug.WriteLine("");
+                }
+                */
+
+
+            }
+            else
+            {
+                Debug.WriteLine("gggg");
+                Debug.WriteLine("");
+            }
+
+            /*
+            var data = Rooms.GroupJoin(
+                Room => Room.BookingId,
+                Booking => Booking.BookingId,
+                (Room, RoomGroup) => new
+                {
+                    BookindId = Booking.
+                }
+                ).To
+
+            foreach (var _booking in bookings)
+            {
+                if (_booking.ArrivalDate.Ticks < model.DateDeparture.Ticks &&
+                    _booking.DepartureDate.Ticks > model.DateArrival.Ticks &&
+                    _booking.DepartureDate.Ticks > model.DateDeparture.Ticks)
+                {
+
+                }
+            }
+
+            db.Bookings.Add(booking);
+            db.SaveChanges();
+        }
+
+        ViewBag.BookingId = new SelectList(db.Rooms, "RoomId", "Description", booking.BookingId);
+        return View(booking);
+        */
+            return RedirectToAction("Index");
         }
 
         // GET: Bookings/Details/5
@@ -40,7 +194,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // GET: Bookings/Create
         public ActionResult Create()
         {
-            ViewBag.BookedCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName");
             ViewBag.BookingId = new SelectList(db.Rooms, "RoomId", "Description");
             return View();
         }
@@ -50,7 +203,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookingId,Price,Payed,DatePayed,ArrivalSate,DepartureDate,ChechIn,ChechOut,BookedCustomerId,BookedRoomId")] Booking booking)
+        public ActionResult Create([Bind(Include = "BookingId,Price,Payed,DatePayed,ArrivalSate,DepartureDate,ChechIn,ChechOut,AadOns")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +212,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BookedCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName", booking.BookedCustomerId);
             ViewBag.BookingId = new SelectList(db.Rooms, "RoomId", "Description", booking.BookingId);
             return View(booking);
         }
@@ -76,7 +228,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BookedCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName", booking.BookedCustomerId);
             ViewBag.BookingId = new SelectList(db.Rooms, "RoomId", "Description", booking.BookingId);
             return View(booking);
         }
@@ -86,7 +237,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookingId,Price,Payed,DatePayed,ArrivalSate,DepartureDate,ChechIn,ChechOut,BookedCustomerId,BookedRoomId")] Booking booking)
+        public ActionResult Edit([Bind(Include = "BookingId,Price,Payed,DatePayed,ArrivalSate,DepartureDate,ChechIn,ChechOut,AadOns")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +245,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BookedCustomerId = new SelectList(db.Customers, "CustomerId", "FirstName", booking.BookedCustomerId);
             ViewBag.BookingId = new SelectList(db.Rooms, "RoomId", "Description", booking.BookingId);
             return View(booking);
         }

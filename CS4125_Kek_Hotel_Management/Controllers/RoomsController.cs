@@ -6,20 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CS4125_Kek_Hotel_Management.DAL;
 using CS4125_Kek_Hotel_Management.Models;
 
 namespace CS4125_Kek_Hotel_Management.Controllers
 {
     public class RoomsController : Controller
     {
-        private HotelContext db = new HotelContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Rooms
         public ActionResult Index()
         {
-            var rooms = db.Rooms.Include(r => r.Booking);
-            return View(rooms.ToList());
+            return View(db.Rooms.ToList());
         }
 
         // GET: Rooms/Details/5
@@ -40,7 +38,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // GET: Rooms/Create
         public ActionResult Create()
         {
-            ViewBag.RoomId = new SelectList(db.Bookings, "BookingId", "BookingId");
             return View();
         }
 
@@ -49,7 +46,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RoomId,Price,Description,Occupied,Room_type,BookingId")] Room room)
+        public ActionResult Create([Bind(Include = "RoomId,Price,Description,Room_type")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +55,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoomId = new SelectList(db.Bookings, "BookingId", "BookingId", room.RoomId);
             return View(room);
         }
 
@@ -74,7 +70,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RoomId = new SelectList(db.Bookings, "BookingId", "BookingId", room.RoomId);
             return View(room);
         }
 
@@ -83,7 +78,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RoomId,Price,Description,Occupied,Room_type,BookingId")] Room room)
+        public ActionResult Edit([Bind(Include = "RoomId,Price,Description,Room_type")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +86,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoomId = new SelectList(db.Bookings, "BookingId", "BookingId", room.RoomId);
             return View(room);
         }
 

@@ -824,7 +824,7 @@ $.extend( $.validator, {
 		// Return the custom message for the given element name and validation method
 		customMessage: function( name, method ) {
 			var m = this.settings.messages[ name ];
-			return m && ( m.constructor === string ? m : m[ method ] );
+			return m && ( m.constructor === String ? m : m[ method ] );
 		},
 
 		// Return the first defined argument, allowing empty strings
@@ -1159,7 +1159,7 @@ $.extend( $.validator, {
 	},
 
 	addClassRules: function( className, rules ) {
-		if ( className.constructor === string ) {
+		if ( className.constructor === String ) {
 			this.classRuleSettings[ className ] = rules;
 		} else {
 			$.extend( this.classRuleSettings, className );
@@ -1396,7 +1396,7 @@ $.extend( $.validator, {
 
 		// https://jqueryvalidation.org/date-method/
 		date: function( value, element ) {
-			return this.optional( element ) || !/Invalid|NaN/.test( new Date( value ).tostring() );
+			return this.optional( element ) || !/Invalid|NaN/.test( new Date( value ).toString() );
 		},
 
 		// https://jqueryvalidation.org/dateISO-method/
@@ -1507,7 +1507,7 @@ $.extend( $.validator, {
 			method = typeof method === "string" && method || "remote";
 
 			var previous = this.previousValue( element, method ),
-				validator, data, optionDatastring;
+				validator, data, optionDataString;
 
 			if ( !this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
@@ -1516,12 +1516,12 @@ $.extend( $.validator, {
 			this.settings.messages[ element.name ][ method ] = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
-			optionDatastring = $.param( $.extend( { data: value }, param.data ) );
-			if ( previous.old === optionDatastring ) {
+			optionDataString = $.param( $.extend( { data: value }, param.data ) );
+			if ( previous.old === optionDataString ) {
 				return previous.valid;
 			}
 
-			previous.old = optionDatastring;
+			previous.old = optionDataString;
 			validator = this;
 			this.startRequest( element );
 			data = {};
