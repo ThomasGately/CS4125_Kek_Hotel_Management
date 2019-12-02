@@ -13,6 +13,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -97,6 +98,25 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                 message = ManageMessageId.Error;
             }
             return RedirectToAction("ManageLogins", new { Message = message });
+        }
+
+        //
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult RegisterUseInfo()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterUseInfo(UserInfo model)
+        {
+            var UserInfo = new UserInfo { ApplicationUser_Id = User.Identity.GetUserId(), FirstName = "test", LastName = "test2", LoyalityDiscount = 0 };
+            db.UesrInfos.Add(UserInfo);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
 
         //

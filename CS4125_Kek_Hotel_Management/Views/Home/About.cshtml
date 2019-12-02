@@ -5,3 +5,11 @@
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
+
+@Html.DropDownList("Room Type", new List<SelectListItem>
+{
+    new SelectListItem { Text = "Great Room", Value = "1"},
+    new SelectListItem { Text = "Good Room", Value = "2"},
+    new SelectListItem { Text = "Bad Room", Value = "3"}
+
+}, "Select Room Type")

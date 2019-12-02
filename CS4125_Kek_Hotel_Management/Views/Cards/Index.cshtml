@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CS4125_Kek_Hotel_Management.Models.Card>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BillingAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardHolderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BillingAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardHolderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpiryDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CardId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CardId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CardId })
+        </td>
+    </tr>
+}
+
+</table>
