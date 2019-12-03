@@ -101,25 +101,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
         }
 
         //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult RegisterUseInfo()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RegisterUseInfo(UserInfo model)
-        {
-            var UserInfo = new UserInfo { ApplicationUser_Id = User.Identity.GetUserId(), FirstName = "test", LastName = "test2", LoyalityDiscount = 0 };
-            db.UesrInfos.Add(UserInfo);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Home");
-        }
-
-        //
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {

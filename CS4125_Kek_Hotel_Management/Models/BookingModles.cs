@@ -17,20 +17,22 @@ namespace CS4125_Kek_Hotel_Management.Models
 
         public bool Payed { get; set; }
 
-        public DateTime DatePayed { get; set; }
-
         public DateTime ArrivalDate { get; set; }
 
         public DateTime DepartureDate { get; set; }
 
-        public DateTime ChechIn { get; set; }
+        public int ChechIn { get; set; }
 
-        public DateTime ChechOut { get; set; }
+        public int ChechOut { get; set; }
 
         public String AadOns { get; set; }
 
+        //public string ApplicationUserID { get; set; }
+
+        //public int RoomID { get; set; }
+
         [Required]
-        public virtual UserInfo UserInfo { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         [Required]
         public virtual Room Room { get; set; }

@@ -15,7 +15,6 @@ namespace CS4125_Kek_Hotel_Management.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -166,7 +165,7 @@ namespace CS4125_Kek_Hotel_Management.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
-                    return RedirectToAction("RegisterUseInfo", "Account");
+                    return RedirectToAction("index", "Home");
                 }
                 AddErrors(result);
             }

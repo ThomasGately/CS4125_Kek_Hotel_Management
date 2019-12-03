@@ -21,6 +21,6 @@ namespace CS4125_Kek_Hotel_Management.Models
 
         public _Room_type Room_type { get; set; }
 
-        public ICollection<Booking> Booking { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

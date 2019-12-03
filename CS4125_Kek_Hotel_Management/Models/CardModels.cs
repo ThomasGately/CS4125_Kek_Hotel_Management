@@ -18,6 +18,7 @@ namespace CS4125_Kek_Hotel_Management.Models
 
         public DateTime ExpiryDate { get; set; }
 
-        public virtual UserInfo UserInfo { get; set; }
+        [Required]
+        public virtual ApplicationUser ApplicationUser_Id { get; set; }
     }
 }
