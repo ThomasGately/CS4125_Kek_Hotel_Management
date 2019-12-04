@@ -12,7 +12,7 @@ namespace CS4125_Kek_Hotel_Management.Payment
     public abstract class Observer
     {
         protected Subject subject;
-        public abstract void update();
+        public abstract void Update();
     }
 
     public class DateDiscountObserver : Observer
@@ -20,10 +20,10 @@ namespace CS4125_Kek_Hotel_Management.Payment
         public DateDiscountObserver(Subject subject)
         {
             this.subject = subject;
-            this.subject.attach(this);
+            this.subject.Attach(this);
         }
 
-        public override void update()
+        public override void Update()
         {
             String DiscountD = "21/07/2020";    //For this implementation we hardcoded a date.
             if (DateTime.Now.ToString("MM/dd/yyyy") == DiscountD)
@@ -38,22 +38,22 @@ namespace CS4125_Kek_Hotel_Management.Payment
             private DateTime state;
 
 
-            public void setState(DateTime dateTime)
+            public void SetState(DateTime dateTime)
             {
                 this.state = dateTime;
-                notifyAllObservers();
+                NotifyAllObservers();
             }
 
-            public void attach(Observer observer)
+            public void Attach(Observer observer)
             {
                 observers.Add(observer);
             }
 
-            public void notifyAllObservers()
+            public void NotifyAllObservers()
             {
                 foreach (Observer observer in observers)
                 {
-                    observer.update();
+                    observer.Update();
                 }
             }
         }

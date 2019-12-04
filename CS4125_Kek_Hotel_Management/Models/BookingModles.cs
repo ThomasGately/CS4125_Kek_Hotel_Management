@@ -27,10 +27,6 @@ namespace CS4125_Kek_Hotel_Management.Models
 
         public String AadOns { get; set; }
 
-        //public string ApplicationUserID { get; set; }
-
-        //public int RoomID { get; set; }
-
         [Required]
         public virtual ApplicationUser ApplicationUser { get; set; }
 

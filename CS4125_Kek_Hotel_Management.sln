@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS4125_Kek_Hotel_Management", "CS4125_Kek_Hotel_Management\CS4125_Kek_Hotel_Management.csproj", "{87F949D0-14E0-44C3-B411-A9719C9D04A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject2", "UnitTestProject2\UnitTestProject2.csproj", "{0580D2F1-C7CA-4CA4-AA6F-C72BA38A6ECD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTestProject4\UnitTests.csproj", "{C6583276-65D1-4FBC-AFB1-510DA9F44687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{87F949D0-14E0-44C3-B411-A9719C9D04A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87F949D0-14E0-44C3-B411-A9719C9D04A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87F949D0-14E0-44C3-B411-A9719C9D04A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0580D2F1-C7CA-4CA4-AA6F-C72BA38A6ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0580D2F1-C7CA-4CA4-AA6F-C72BA38A6ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0580D2F1-C7CA-4CA4-AA6F-C72BA38A6ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0580D2F1-C7CA-4CA4-AA6F-C72BA38A6ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6583276-65D1-4FBC-AFB1-510DA9F44687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6583276-65D1-4FBC-AFB1-510DA9F44687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6583276-65D1-4FBC-AFB1-510DA9F44687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6583276-65D1-4FBC-AFB1-510DA9F44687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,8 +21,6 @@ namespace CS4125_Kek_Hotel_Management.Models
 
         public int LoyalityDiscount { get; set; }
 
-        public int ApplicationUserId { get; set; }
-
         public ICollection<Booking> Bookings { get; set; }
 
         public ICollection<Card> Cards { get; set; }

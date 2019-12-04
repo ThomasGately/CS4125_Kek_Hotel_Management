@@ -27,7 +27,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Make Booking", "BookingRoomDateView", "Bookings")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("My Bookins", "MyBookings", "Bookings")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

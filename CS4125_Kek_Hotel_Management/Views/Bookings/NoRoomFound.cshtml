@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "NoRoomFound";
+}
+
+<div class="jumbotron">
+    <h2>No Rooms Found for Dates</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <p class="btn btn-default">
+            @Html.ActionLink("Home", "Index", "Home")  &raquo;
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p class="btn btn-default">
+            @Html.ActionLink("Try Again", "BookingRoomDateView", "Bookings")  &raquo;
+        </p>
+    </div>
+</div>

@@ -12,28 +12,30 @@ namespace CS4125_Kek_Hotel_Management.Payment
     // decorators.
     public abstract class Payment
     {
-        public Booking bookingItem;
-        public bool sale;
-        public double total;
-        public double bookingDiscount = 0;
-        public DateTime DateTime = DateTime.Now;
-        public abstract string Operation();
-
-
-
+        public double price;
+        public int discountLevel;
+        public abstract double getTotal();
     }
 
     // Concrete Components provide default implementations of the operations.
     // There might be several variations of these classes.
-    class ConcreteComponent : Payment
+    class BasePayment : Payment
     {
 
-        public override string Operation()  //Base class which will be called by further decorators.
+
+
+        public BasePayment(Booking Input)
         {
-            total = bookingItem.Price;
-            total = total - (total / bookingDiscount);
-            return "Payment:" + total + " Discount:" + bookingDiscount + "/n";
+            this.price = Input.Price;
+            this.discountLevel = Input.ApplicationUser.LoyalityDiscount;
         }
+
+        public override double getTotal()//Returns flat rate no discount.
+        {
+
+            return this.price;
+        }
+
 
     }
 
@@ -57,15 +59,15 @@ namespace CS4125_Kek_Hotel_Management.Payment
         }
 
         // The Decorator delegates all work to the wrapped component.
-        public override string Operation()
+        public override double getTotal()
         {
             if (this._Payment != null)
             {
-                return this._Payment.Operation();
+                return this._Payment.getTotal();
             }
             else
             {
-                return string.Empty;
+                return -1;
             }
         }
     }
@@ -74,6 +76,7 @@ namespace CS4125_Kek_Hotel_Management.Payment
     // way.
     class LoyaltyDiscount : Decorator
     {
+
         public LoyaltyDiscount(Payment comp) : base(comp)
         {
         }
@@ -81,20 +84,20 @@ namespace CS4125_Kek_Hotel_Management.Payment
         // Decorators may call parent implementation of the operation, instead
         // of calling the wrapped object directly. This approach simplifies
         // extension of decorator classes.
-        public override string Operation()
+        public override double getTotal()
         {
-            if (bookingItem.BookedCustomer.LoyalityDiscount == 1)
-            { bookingDiscount = bookingDiscount + ((total / 100) * 5); }
-            if (bookingItem.BookedCustomer.LoyalityDiscount == 2)
-            { bookingDiscount = bookingDiscount + ((total / 100) * 10); }
-            if (bookingItem.BookedCustomer.LoyalityDiscount == 3)
-            { bookingDiscount = bookingDiscount + ((total / 100) * 15); }
+            if (discountLevel == 1)
+            { price = price - ((price / 100) * 5); }
+            if (discountLevel == 2)
+            { price = price - ((price / 100) * 10); }
+            if (discountLevel == 3)
+            { price = price - ((price / 100) * 15); }
 
 
-            return $"LoyaltyDiscount({base.Operation()})";
+            return base.getTotal();
         }
     }
-
+    /*
     // Decorators can execute their behavior either before or after the call to
     // a wrapped object.
     class FathersDayDiscount : Decorator
@@ -111,7 +114,7 @@ namespace CS4125_Kek_Hotel_Management.Payment
             return $"SaleDiscount ({base.Operation()})";
         }
     }
-
+    */
     public class Client
     {
         // The client code works with all objects using the Component interface.
@@ -119,22 +122,30 @@ namespace CS4125_Kek_Hotel_Management.Payment
         // components it works with.
         public void ClientCode(Payment component)
         {
-            component.Operation();
+            component.getTotal();
         }
     }
-
+    /*
     class Program
     {
         static void Main(string[] args)
         {
             Client client = new Client();
 
-            var simple = new ConcreteComponent();
+           // var simple = new BasePayment();
 
-           
-            LoyaltyDiscount decorator1 = new LoyaltyDiscount(simple);
-            FathersDayDiscount decorator2 = new FathersDayDiscount(decorator1);
-          
+            // ...as well as decorated ones.
+            //
+            // Note how decorators can wrap not only simple components but the
+            // other decorators as well.
+            //LoyaltyDiscount decorator1 = new LoyaltyDiscount(simple);
+            //FathersDayDiscount decorator2 = new FathersDayDiscount(decorator1);
+            //Console.WriteLine("Client: Now I've got a decorated component:");
+            //client.ClientCode(decorator2);
         }
     }
+    */
 }
+
+
+
